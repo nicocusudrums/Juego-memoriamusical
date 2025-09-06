@@ -7,6 +7,7 @@ let bloqueo = false;
 
 let tiempo = 0;
 let intervaloTiempo = null;
+let movimientos = 0;
 
 function mezclar(array) {
   return array.sort(() => 0.5 - Math.random());
@@ -21,15 +22,22 @@ function asignarCartas() {
     carta.dataset.valor = cartasMezcladas[index];
   });
 }
+
 function verificarGanador() {
   const acertadas = document.querySelectorAll('.card.acertada').length;
   if (acertadas === cartas.length) {
     detenerTemporizador();
+
+
+    const mensaje = `⏱ Tiempo: ${tiempo} segundos<br>🎯 Movimientos: ${movimientos}`;
+    document.getElementById('detalle-ganador').innerHTML = mensaje;
+
     setTimeout(() => {
       document.getElementById('mensaje-ganaste').style.display = 'flex';
     }, 500);
   }
 }
+
 function manejarClicCarta(carta) {
   if (bloqueo || carta.classList.contains('acertada') || carta === cartaSeleccionada1) return;
 
@@ -40,6 +48,9 @@ function manejarClicCarta(carta) {
   } else {
     cartaSeleccionada2 = carta;
     bloqueo = true;
+
+    movimientos++;
+    actualizarContadorMovimientos();
 
     setTimeout(() => {
       if (cartaSeleccionada1.dataset.valor === cartaSeleccionada2.dataset.valor) {
@@ -69,20 +80,32 @@ function reiniciarJuego() {
   document.getElementById('mensaje-ganaste').style.display = 'none';
   asignarCartas();
   iniciarTemporizador();
+  movimientos = 0;
+  actualizarContadorMovimientos();
 }
-asignarCartas();
-iniciarTemporizador();
+
+function actualizarContadorMovimientos() {
+  document.getElementById('movimientos').textContent = `Movimientos: ${movimientos}`;
+}
+
 function actualizarTemporizador() {
   tiempo++;
   document.getElementById('temporizador').textContent = `Tiempo: ${tiempo} s`;
 }
+
 function iniciarTemporizador() {
   tiempo = 0;
   document.getElementById('temporizador').textContent = `Tiempo: 0 s`;
   if (intervaloTiempo) clearInterval(intervaloTiempo);
   intervaloTiempo = setInterval(actualizarTemporizador, 1000);
 }
+
 function detenerTemporizador() {
   clearInterval(intervaloTiempo);
 }
 
+document.getElementById('mensaje-ganaste').style.display = 'none';
+asignarCartas();
+iniciarTemporizador();
+movimientos = 0;
+actualizarContadorMovimientos();

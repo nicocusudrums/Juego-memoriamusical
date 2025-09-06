@@ -10,8 +10,8 @@
 
 <body>
     <h1 class="titulo">Memoria Musical</h1>
-    <header class="header">
 
+    <header class="header">
         <div class="game-container">
             <div class="card">?</div>
             <div class="card">?</div>
@@ -24,14 +24,17 @@
         </div>
     </header>
 
-
     <div id="mensaje-ganaste">
-        <div>¡Ganaste!</div>
+        <div id="mensaje-final">
+            <h2>¡Ganaste!</h2>
+            <p id="detalle-ganador"></p>
+        </div>
         <button onclick="reiniciarJuego()">Jugar de nuevo</button>
     </div>
 
-
     <div id="temporizador">Tiempo: 0 s</div>
+    <div id="movimientos">Movimientos: 0</div>
+
     <script src="script.js"></script>
 </body>
 
