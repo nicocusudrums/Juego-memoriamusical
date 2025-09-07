@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: rgb(59, 158, 158);
+  background-color: rgb(255, 245, 56);
 }
 
 header {
@@ -14,7 +14,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 65vh;
   margin: 0;
 }
 
@@ -22,7 +22,7 @@ header {
   display: grid;
   grid-template-columns: repeat(4, 100px);
   grid-gap: 15px;
-  background-color: #fff;
+  background-color: #000000;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -107,13 +107,13 @@ header {
   .game-container {
     grid-template-columns: repeat(2, 100px);
     max-width: 220px;
-    gap: 10px;
+    gap: 5px;
     margin: 0 auto;
   }
 
   .card {
     width: 100px;
-    height: 100px;
+    height: 90px;
     font-size: 48px;
   }
 
@@ -146,6 +146,12 @@ header {
 
 #movimientos {
   font-size: 1.5rem;
+  color: #000000;
+  text-align: center;
+}
+
+#mejor-resultado {
+  font-size: 1rem;
   color: #000000;
   text-align: center;
 }
