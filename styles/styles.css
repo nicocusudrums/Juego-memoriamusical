@@ -1,11 +1,9 @@
-/* ----- TÍTULO ----- */
 .titulo {
   text-align: center;
   text-decoration: underline;
   margin-top: 20px;
 }
 
-/* ----- BODY ----- */
 body {
   background-color: rgb(255, 245, 56);
   margin: 0;
@@ -13,7 +11,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* ----- HEADER ----- */
 header {
   display: flex;
   justify-content: center;
@@ -22,7 +19,6 @@ header {
   background-color: #f0f0f0;
 }
 
-/* ----- GAME CONTAINER ----- */
 .game-container {
   display: grid;
   grid-template-columns: repeat(4, 80px);
@@ -33,7 +29,6 @@ header {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* ----- CARTAS ----- */
 .card {
   width: 80px;
   height: 80px;
@@ -76,7 +71,6 @@ header {
   transform: rotateY(180deg);
 }
 
-/* ----- MENSAJE GANADOR ----- */
 #mensaje-ganaste {
   display: none;
   position: fixed;
@@ -106,7 +100,6 @@ header {
   cursor: pointer;
 }
 
-/* ----- INFO TEXTOS ----- */
 #temporizador,
 #movimientos,
 #mejor-resultado {
@@ -117,7 +110,6 @@ header {
   font-weight: bold;
 }
 
-/* ----- RESPONSIVE TABLET (max 768px) ----- */
 @media (max-width: 768px) {
   .game-container {
     grid-template-columns: repeat(4, 70px);
@@ -149,11 +141,9 @@ header {
   }
 }
 
-/* ----- RESPONSIVE MOBILE (max 480px) - VISTA VERTICAL ----- */
 @media (max-width: 480px) {
   .game-container {
     grid-template-columns: repeat(2, 80px);
-    /* 2 columnas */
     grid-gap: 10px;
     padding: 10px;
     margin: 0 auto;
@@ -196,6 +186,7 @@ header {
 #ranking {
   text-align: center;
 }
+
 .mensaje-bienvenida {
   position: fixed;
   top: 0;
@@ -230,20 +221,29 @@ header {
 }
 
 @keyframes fadeIn {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
+
 @keyframes fadeOut {
-  to { opacity: 0; }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes scaleUp {
-  to { transform: scale(1); }
-}
-@keyframes scaleDown {
-  to { transform: scale(0.8); }
+  to {
+    transform: scale(1);
+  }
 }
 
-/* Responsive font size for smaller screens */
+@keyframes scaleDown {
+  to {
+    transform: scale(0.8);
+  }
+}
+
 @media (max-width: 480px) {
   .mensaje-contenido {
     font-size: 1.5rem;

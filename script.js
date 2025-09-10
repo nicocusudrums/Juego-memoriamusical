@@ -17,7 +17,7 @@ document.getElementById('btn-nombre').addEventListener('click', () => {
     nombreJugador = entrada;
     document.getElementById('campo-nombre').style.display = 'none';
 
-    reiniciarJuego(); // Aquí se asignan cartas y se inicia temporizador
+    reiniciarJuego();
     mostrarMejorResultadoJugador();
     mostrarRanking();
   }
@@ -123,8 +123,6 @@ function detenerTemporizador() {
 function actualizarContadorMovimientos() {
   document.getElementById('movimientos').textContent = `Movimientos: ${movimientos}`;
 }
-
-// LOCAL STORAGE
 function guardarMejorResultadoJugador() {
   if (!nombreJugador) return;
   const todos = JSON.parse(localStorage.getItem('todosJugadores') || '{}');
@@ -137,7 +135,6 @@ function guardarMejorResultadoJugador() {
     localStorage.setItem('todosJugadores', JSON.stringify(todos));
   }
 }
-
 function mostrarMejorResultadoJugador() {
   const todos = JSON.parse(localStorage.getItem('todosJugadores') || '{}');
   if (todos[nombreJugador]) {
@@ -148,7 +145,6 @@ function mostrarMejorResultadoJugador() {
     document.getElementById('mejor-resultado').textContent = `🏆 Tu récord: —`;
   }
 }
-
 function mostrarRanking() {
   const todos = JSON.parse(localStorage.getItem('todosJugadores') || '{}');
   const arr = Object.entries(todos);
