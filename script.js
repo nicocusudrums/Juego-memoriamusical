@@ -10,7 +10,6 @@ let intervaloTiempo = null;
 let movimientos = 0;
 let nombreJugador = '';
 
-// Cargar las cartas desde cartas.json
 fetch('cartas.json')
   .then(response => response.json())
   .then(data => {
