@@ -1,5 +1,4 @@
-
-const valoresCartas = ['🎸', '🎹', '🥁', '🎺', '🎸', '🎹', '🥁', '🎺'];
+let valoresCartas = [];
 
 let cartas = document.querySelectorAll('.card');
 let cartaSeleccionada1 = null;
@@ -11,17 +10,37 @@ let intervaloTiempo = null;
 let movimientos = 0;
 let nombreJugador = '';
 
-document.getElementById('btn-nombre').addEventListener('click', () => {
-  const entrada = document.getElementById('entrada-nombre').value.trim();
-  if (entrada) {
-    nombreJugador = entrada;
-    document.getElementById('campo-nombre').style.display = 'none';
+// Cargar las cartas desde cartas.json
+fetch('cartas.json')
+  .then(response => response.json())
+  .then(data => {
+    valoresCartas = [...data.cartas, ...data.cartas].map(carta => carta.simbolo);
+    habilitarBotonComenzar();
+  })
+  .catch(error => {
+    console.error('Error al cargar cartas:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'No se pudieron cargar las cartas. Intenta recargar la página.',
+    });
+  });
 
-    reiniciarJuego();
-    mostrarMejorResultadoJugador();
-    mostrarRanking();
-  }
-});
+function habilitarBotonComenzar() {
+  const btn = document.getElementById('btn-nombre');
+  btn.disabled = false;
+  btn.addEventListener('click', () => {
+    const entrada = document.getElementById('entrada-nombre').value.trim();
+    if (entrada) {
+      nombreJugador = entrada;
+      document.getElementById('campo-nombre').style.display = 'none';
+
+      reiniciarJuego();
+      mostrarMejorResultadoJugador();
+      mostrarRanking();
+    }
+  });
+}
 
 function mezclar(array) {
   return array.sort(() => 0.5 - Math.random());
@@ -70,9 +89,13 @@ function manejarClicCarta(carta) {
   }
 }
 
-cartas.forEach(carta => {
-  carta.addEventListener('click', () => manejarClicCarta(carta));
-});
+function asignarEventosCartas() {
+  cartas.forEach(carta => {
+    carta.addEventListener('click', () => manejarClicCarta(carta));
+  });
+}
+
+asignarEventosCartas();
 
 function reiniciarJuego() {
   cartaSeleccionada1 = null;
@@ -82,7 +105,6 @@ function reiniciarJuego() {
   movimientos = 0;
   actualizarTemporizador();
   actualizarContadorMovimientos();
-  document.getElementById('mensaje-ganaste').style.display = 'none';
   asignarCartas();
   iniciarTemporizador();
 }
@@ -92,14 +114,24 @@ function verificarGanador() {
   if (acertadas === cartas.length) {
     detenerTemporizador();
 
-    const mensaje = `⏱ Tiempo: ${tiempo} segundos<br>🎯 Movimientos: ${movimientos}`;
-    document.getElementById('detalle-ganador').innerHTML = mensaje;
-
     guardarMejorResultadoJugador();
+
     setTimeout(() => {
-      document.getElementById('mensaje-ganaste').style.display = 'flex';
       mostrarMejorResultadoJugador();
       mostrarRanking();
+
+      Swal.fire({
+        title: '🎉 ¡Ganaste! 🎉',
+        html: `⏱ <strong>Tiempo:</strong> ${tiempo} segundos<br>
+               🎯 <strong>Movimientos:</strong> ${movimientos}`,
+        icon: 'success',
+        confirmButtonText: '🔁 Jugar de nuevo',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        background: '#fffbe7',
+      }).then(() => {
+        reiniciarJuego();
+      });
     }, 500);
   }
 }
@@ -123,6 +155,7 @@ function detenerTemporizador() {
 function actualizarContadorMovimientos() {
   document.getElementById('movimientos').textContent = `Movimientos: ${movimientos}`;
 }
+
 function guardarMejorResultadoJugador() {
   if (!nombreJugador) return;
   const todos = JSON.parse(localStorage.getItem('todosJugadores') || '{}');
@@ -135,6 +168,7 @@ function guardarMejorResultadoJugador() {
     localStorage.setItem('todosJugadores', JSON.stringify(todos));
   }
 }
+
 function mostrarMejorResultadoJugador() {
   const todos = JSON.parse(localStorage.getItem('todosJugadores') || '{}');
   if (todos[nombreJugador]) {
@@ -145,6 +179,7 @@ function mostrarMejorResultadoJugador() {
     document.getElementById('mejor-resultado').textContent = `🏆 Tu récord: —`;
   }
 }
+
 function mostrarRanking() {
   const todos = JSON.parse(localStorage.getItem('todosJugadores') || '{}');
   const arr = Object.entries(todos);
@@ -161,6 +196,7 @@ function mostrarRanking() {
     ul.appendChild(li);
   });
 }
+
 window.addEventListener('load', () => {
   const mensaje = document.getElementById('mensaje-bienvenida');
   mensaje.addEventListener('animationend', (e) => {
@@ -169,5 +205,3 @@ window.addEventListener('load', () => {
     }
   });
 });
-
-

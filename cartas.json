@@ -1,0 +1,8 @@
+{
+  "cartas" : [
+    {"id": 1, "simbolo": "🎸"},
+    {"id": 2, "simbolo": "🎹"},
+    {"id": 3, "simbolo": "🥁"},
+    {"id": 4, "simbolo": "🎺"}
+  ]
+}
